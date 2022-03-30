@@ -1,0 +1,11 @@
+{% extends 'base_layout.html' %} {% block content %}
+
+<div class="create_category">
+  <h2>Create a New Category</h2>
+  <form class="site-form" action="{% url 'categories:create' %}" method="post">
+    {% csrf_token %} {{ form }}
+    <input type="submit" value="Create" />
+  </form>
+</div>
+
+{% endblock %}

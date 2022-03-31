@@ -3,29 +3,62 @@
 <h1>Product List</h1>
 
 {% if user.is_authenticated %}
-<a href="{% url 'products:create' %}">Add New Product</a>
+<a
+  class="btn btn-primary btn-md"
+  tabindex="-1"
+  role="button"
+  aria-disabled="true"
+  href="{% url 'products:create' %}"
+  >Add New Product</a
+>
 {% else %}
-<a href="{% url 'login' %}">Log In</a> {% endif %}
+<a class="btn btn-primary btn-md" href="{% url 'login' %}">Log In</a>
+{% endif%}
 
 <div class="products">
   <div class="product">
     <div>
-      <h3>Product</h3>
-      {% for product in products %}
-      <ul>
-        <li><img src="{{product.picture.url}}" /></li>
-        <li>{{ product.category }}</li>
-        <li>{{ product.title }}</li>
-        <li>{{ product.description }}</li>
-        <li>$ {{ product.price }}</li>
-        <li>{{ product.sku }}</li>
-      </ul>
-      {% if user.is_authenticated %}
-      <div>
-        <span><a href="{% url 'products:edit' product.id %}">Edit</a></span>
-        <span><a href="{% url 'products:delete' product.id %}">Delete</a></span>
-      </div>
-      {% endif %} {% endfor %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Thumb</th>
+            <th scope="col">Category</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Price</th>
+            <th scope="col">SKU</th>
+            {% if user.is_authenticated %}
+            <th scope="col">Operation</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+          <tr>
+            <td><img src="{{product.picture.url}}" style="width: 80px" /></td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.title }}</td>
+            <td>{{ product.description }}</td>
+            <td>${{ product.price }}</td>
+            <td>{{ product.sku }}</td>
+            {% if user.is_authenticated %}
+            <td>
+              <a
+                class="btn btn-warning btn-sm"
+                href="{% url 'products:edit' product.id %}"
+                >Edit</a
+              >
+              <a
+                class="btn btn-danger btn-sm"
+                href="{% url 'products:delete' product.id %}"
+                >Delete</a
+              >
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

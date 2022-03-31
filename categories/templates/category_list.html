@@ -1,29 +1,37 @@
-{% extends 'base_layout.html' %} {% block content %} {% comment %}
-<style>
-  table {
-    width: 50%;
-  }
-</style>
-{% endcomment %}
+{% extends 'base_layout.html' %} {% block content %}
 <h1>Category List</h1>
 
 {% if user.is_authenticated %}
-<a href="{% url 'categories:create' %}">Add New Category</a>
+<a
+  class="btn btn-primary btn-md"
+  tabindex="-1"
+  role="button"
+  aria-disabled="true"
+  href="{% url 'categories:create' %}"
+  >Add New Category</a
+>
 {% else %}
 <a href="{% url 'login' %}">Log In</a> {% endif %}
 
 <div class="categories">
   <div class="category">
     <table class="table">
-      <tr>
-        <th>Categories</th>
-      </tr>
       {% for category in categories %}
       <tr>
         <td>{{ category.title }}</td>
         {% if user.is_authenticated %}
-        <td><a href="{% url 'categories:edit' category.id %}">Edit</a></td>
-        <td><a href="{% url 'categories:delete' category.id %}">Delete</a></td>
+        <td>
+          <a
+            class="btn btn-warning btn-sm"
+            href="{% url 'categories:edit' category.id %}"
+            >Edit</a
+          >
+          <a
+            class="btn btn-danger btn-sm"
+            href="{% url 'categories:delete' category.id %}"
+            >Delete</a
+          >
+        </td>
         {% endif %}
       </tr>
       {% endfor %}

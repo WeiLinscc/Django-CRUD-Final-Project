@@ -13,7 +13,7 @@ def login_view(request):
             if 'next' in request.POST:
                 return redirect(request.POST.get('next'))
             else:
-                return redirect('categories:list')            
+                return redirect('products:list')            
     else:
         form = AuthenticationForm()
 

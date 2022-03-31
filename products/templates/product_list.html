@@ -1,0 +1,33 @@
+{% extends 'base_layout.html' %} {% block content %}
+
+<h1>Product List</h1>
+
+{% if user.is_authenticated %}
+<a href="{% url 'products:create' %}">Add New Product</a>
+{% else %}
+<a href="{% url 'login' %}">Log In</a> {% endif %}
+
+<div class="products">
+  <div class="product">
+    <div>
+      <h3>Product</h3>
+      {% for product in products %}
+      <ul>
+        <li><img src="{{product.picture.url}}" /></li>
+        <li>{{ product.category }}</li>
+        <li>{{ product.title }}</li>
+        <li>{{ product.description }}</li>
+        <li>$ {{ product.price }}</li>
+        <li>{{ product.sku }}</li>
+      </ul>
+      {% if user.is_authenticated %}
+      <div>
+        <span><a href="{% url 'products:edit' product.id %}">Edit</a></span>
+        <span><a href="{% url 'products:delete' product.id %}">Delete</a></span>
+      </div>
+      {% endif %} {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
